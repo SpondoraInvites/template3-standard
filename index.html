@@ -1,0 +1,308 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="description" content="The wedding of Zayan &amp; Mahira — Saturday, September 12, 2026 — The Royal Garden, Uttara, Dhaka.">
+<meta name="theme-color" content="#F5F0E6">
+
+<!-- Social sharing (update per client) -->
+<meta property="og:type" content="website">
+<meta property="og:title" content="Zayan &amp; Mahira — Wedding Invitation">
+<meta property="og:description" content="Join us on the rooftop garden — the wedding of Zayan &amp; Mahira, Saturday, September 12, 2026, The Royal Garden, Uttara, Dhaka.">
+<meta property="og:image" content="assets/og-cover.png">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Zayan &amp; Mahira — Wedding Invitation">
+<meta name="twitter:description" content="The wedding of Zayan &amp; Mahira — Saturday, September 12, 2026 — The Royal Garden, Uttara, Dhaka.">
+<meta name="twitter:image" content="assets/og-cover.png">
+<title>Zayan &amp; Mahira — September 12, 2026</title>
+<link rel="icon" type="image/svg+xml" href="assets/favicon.svg">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400;1,500&family=Jost:wght@300;400;500&family=Pinyon+Script&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="styles.css">
+<noscript>
+  <style>
+    body.locked{overflow:auto}
+    #overlay,#petals{display:none}
+    nav,#musicBtn{opacity:1!important;pointer-events:auto!important}
+    .reveal,[data-st]{opacity:1!important;transform:none!important}
+  </style>
+</noscript>
+</head>
+<body class="locked">
+
+<!-- inline icon set -->
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+  <symbol id="i-note" viewBox="0 0 24 24"><path d="M9 18V5l12-2v13" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/><circle cx="6" cy="18" r="2.6" fill="currentColor"/><circle cx="18" cy="16" r="2.6" fill="currentColor"/></symbol>
+  <symbol id="i-note-off" viewBox="0 0 24 24"><path d="M9 18V5l12-2v13" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/><circle cx="6" cy="18" r="2.6" fill="currentColor"/><circle cx="18" cy="16" r="2.6" fill="currentColor"/><path d="M4 4l16 16" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></symbol>
+  <symbol id="i-cal" viewBox="0 0 24 24"><rect x="3.5" y="5" width="17" height="15.5" rx="1.5" fill="none" stroke="currentColor" stroke-width="1.5"/><path d="M3.5 9.5h17M8 3v4M16 3v4" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></symbol>
+  <symbol id="i-pin" viewBox="0 0 24 24"><path d="M12 21.5S5 15.8 5 10a7 7 0 1 1 14 0c0 5.8-7 11.5-7 11.5z" fill="none" stroke="currentColor" stroke-width="1.5"/><circle cx="12" cy="10" r="2.5" fill="none" stroke="currentColor" stroke-width="1.5"/></symbol>
+  <symbol id="i-plus" viewBox="0 0 24 24"><path d="M12 5v14M5 12h14" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></symbol>
+  <symbol id="i-minus" viewBox="0 0 24 24"><path d="M5 12h14" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></symbol>
+  <symbol id="i-sprig" viewBox="0 0 24 24"><path d="M4.5 19.5C8 16 14 13 19.5 4.5" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/><path d="M10 14.5C7.6 14.9 5.4 13.6 5 11.2 7.4 10.8 9.5 12.1 10 14.5Z" fill="currentColor"/><path d="M13.5 11.5C13.9 9.1 16.1 7.8 18.5 8.2 18.1 10.7 15.9 11.9 13.5 11.5Z" fill="currentColor"/></symbol>
+</svg>
+
+<!-- ============ Sealed envelope intro ============ -->
+<div id="overlay">
+  <div class="ov-vignette"></div>
+  <div class="ov-inner">
+    <div class="ov-head">
+      <span class="label" style="color:var(--cream-soft)">The wedding of</span>
+      <span class="ov-names">Zayan &amp; Mahira</span>
+    </div>
+    <div class="env-wrap">
+      <div class="envelope" id="envelope">
+        <div class="env-back"></div>
+        <div class="env-card">
+          <span class="label">The wedding of</span>
+          <span class="env-names">Zayan <em>&amp;</em> Mahira</span>
+          <span class="env-dia"></span>
+          <span class="env-date">12 · 09 · 2026 — Uttara, Dhaka</span>
+        </div>
+        <div class="env-front"></div>
+        <div class="env-flap" id="envFlap">
+          <div class="ff front"></div>
+          <div class="ff back"></div>
+          <button class="seal-btn" id="sealBtn" aria-label="Open the invitation">
+            <span class="wax"><span class="mono">Z·M</span></span>
+          </button>
+        </div>
+      </div>
+    </div>
+    <div class="ov-hint label" id="ovHint">Tap the wax seal to open</div>
+  </div>
+</div>
+
+<canvas id="petals" aria-hidden="true"></canvas>
+
+<nav id="nav">
+  <div class="nav-in">
+    <a class="nav-mono" href="#top">Z·M</a>
+    <div class="nav-links">
+      <a href="#story">Our Story</a>
+      <a href="#day">The Day</a>
+      <a href="#rsvp">Reply</a>
+    </div>
+  </div>
+</nav>
+
+<main>
+  <!-- ============ Hero ============ -->
+  <header class="hero" id="top">
+    <div class="botanical bl" data-base="rotate(-6deg)" data-depth="1"></div>
+    <div class="botanical br" data-base="scaleX(-1) rotate(-4deg)" data-depth="1.7"></div>
+    <p class="label" data-st style="--d:.1s">Together with their families</p>
+    <h1 class="names" data-st style="--d:.3s">
+      <span class="name n1">Zayan</span>
+      <span class="amp">&amp;</span>
+      <span class="name n2">Mahira</span>
+    </h1>
+    <div class="orn" data-st style="--d:.55s"><span class="dia"></span></div>
+    <p class="hero-date" data-st style="--d:.7s">Saturday · September Twelfth · Two Thousand Twenty-Six</p>
+    <p class="hero-venue" data-st style="--d:.85s">The Royal Garden — Polwel Carnation · Uttara, Dhaka</p>
+    <a class="scroll-cue" href="#invite" aria-label="Scroll to the invitation">
+      <span class="label">Scroll</span><span class="line"></span>
+    </a>
+  </header>
+
+  <!-- ============ The invitation ============ -->
+  <section class="invite" id="invite">
+    <span class="amp-mark" aria-hidden="true">&amp;</span>
+    <div class="wrap invite-inner">
+      <div class="sec-head reveal">
+        <span class="script">the invitation</span>
+        <span class="label">You are cordially invited</span>
+      </div>
+      <p class="lead reveal" style="--d:.1s">It’s happening — and you’re the reason it will feel like home.</p>
+      <p class="body drop reveal" style="--d:.2s">We met over a borrowed table at a crowded café in Dhanmondi, and seven years later we are still choosing that table, that marine drive to Teknaf, that foggy morning in a Sylhet tea garden — choosing each other. We would be honoured to have you beside us on Saturday, the twelfth of September, two thousand twenty-six, as we do it properly at last: rings, vows, and all of our favourite people in one garden.</p>
+      <div class="center reveal" style="--d:.3s;margin-top:2.6rem"><a class="btn" href="#rsvp">Kindly Reply</a></div>
+    </div>
+  </section>
+
+  <!-- ============ Our story ============ -->
+  <section id="story">
+    <div class="wrap">
+      <div class="sec-head reveal">
+        <span class="script">our story</span>
+        <span class="label">Seven years · four chapters</span>
+      </div>
+      <div class="timeline" id="timeline">
+        <div class="tl-line"></div><div class="tl-fill" id="tlFill"></div>
+        <article class="entry reveal">
+          <span class="node"></span>
+          <span class="label">October 2019</span>
+          <h3>A borrowed table</h3>
+          <p>A shared table at a crowded café in Dhanmondi. Zayan asked if the seat was taken; Mahira said yes — and then, thankfully, changed her mind.</p>
+        </article>
+        <article class="entry reveal">
+          <span class="node"></span>
+          <span class="label">June 2021</span>
+          <h3>The coast road</h3>
+          <p>Ten days, one borrowed car, and the whole marine drive from Cox's Bazar to Teknaf. Somewhere past Inani it stopped being a trip and started being a life.</p>
+        </article>
+        <article class="entry reveal">
+          <span class="node"></span>
+          <span class="label">December 2023</span>
+          <h3>The question</h3>
+          <p>A winter evening at a tea-garden resort in Sreemangal, fog rolling down the slopes, candles lit. Zayan asked. Mahira said yes before he could finish the sentence.</p>
+        </article>
+        <article class="entry reveal">
+          <span class="node"></span>
+          <span class="label">September 2026</span>
+          <h3>The answer continues</h3>
+          <p>Seven years, three apartments, one very opinionated cat. Now: all of you, under the string lights, as the next chapter begins.</p>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ The day (dark band) ============ -->
+  <section class="dark" id="day">
+    <div class="wrap">
+      <div class="sec-head reveal">
+        <span class="script">the day</span>
+        <span class="label">Save the date</span>
+      </div>
+
+      <div class="count reveal" style="--d:.1s" id="count">
+        <div class="cd"><span class="num" id="cdD">—</span><span class="unit">Days</span></div>
+        <span class="cdsep"></span>
+        <div class="cd"><span class="num" id="cdH">—</span><span class="unit">Hours</span></div>
+        <span class="cdsep"></span>
+        <div class="cd"><span class="num" id="cdM">—</span><span class="unit">Minutes</span></div>
+        <span class="cdsep"></span>
+        <div class="cd"><span class="num" id="cdS">—</span><span class="unit">Seconds</span></div>
+      </div>
+      <p class="count-cap reveal" style="--d:.2s">…until we say “I do”</p>
+
+      <div class="details reveal" style="--d:.1s">
+        <div class="d-col">
+          <span class="label">The Ceremony</span>
+          <h3>Four o’clock, in the garden</h3>
+          <p>On the lantern-lit rooftop garden of The Royal Garden. Kindly arrive by half past three; festive attire, with flat shoes recommended for the garden floor.</p>
+          <p class="d-addr"><svg class="ic"><use href="#i-pin"/></svg><span>The Royal Garden · Level 9, Polwel Carnation, Sector 8, Uttara, Dhaka</span></p>
+        </div>
+        <div class="d-col d-rec">
+          <span class="label">The Reception</span>
+          <h3>Dinner &amp; dancing, till late</h3>
+          <p>To follow at six o’clock — long tables under the string lights, toasts, cake, and dancing until the stars insist otherwise. A shuttle returns guests to hotels across Uttara at eleven.</p>
+        </div>
+      </div>
+
+      <div class="schedule reveal" style="--d:.15s">
+        <span class="label center-block">The shape of the day</span>
+        <div class="sched-row"><p class="t">3:30</p><p class="e">Arrival &amp; welcome drinks on the rooftop</p></div>
+        <div class="sched-row"><p class="t">4:00</p><p class="e">The ceremony, on the rooftop garden</p></div>
+        <div class="sched-row"><p class="t">4:45</p><p class="e">Mocktails &amp; photographs</p></div>
+        <div class="sched-row"><p class="t">6:30</p><p class="e">Dinner at long tables, under the lights</p></div>
+        <div class="sched-row"><p class="t">8:00</p><p class="e">First dance &amp; toasts</p></div>
+        <div class="sched-row"><p class="t">9:30</p><p class="e">Dancing, cake, and other necessities</p></div>
+        <div class="sched-row"><p class="t">11:00</p><p class="e">Sparkler send-off &amp; hotel shuttle</p></div>
+      </div>
+
+      <div class="day-actions reveal" style="--d:.2s">
+        <button class="btn light" id="icsBtn"><svg class="ic"><use href="#i-cal"/></svg>Add to calendar</button>
+        <a class="btn light" href="https://www.google.com/maps/place/The+Royal+Garden/@23.8787538,90.3991208,17z/data=!4m6!3m5!1s0x3755c5005cda5cd5:0x68d87301b0747cbe!8m2!3d23.8787538!4d90.4016957!16s%2Fg%2F11m5y7qjch" target="_blank" rel="noopener"><svg class="ic"><use href="#i-pin"/></svg>Get directions</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ RSVP ============ -->
+  <section class="rsvp" id="rsvp">
+    <div class="wrap">
+      <div class="sec-head reveal">
+        <span class="script">kindly reply</span>
+        <span class="label">RSVP · by the first of August</span>
+      </div>
+
+      <div class="rsvp-card reveal" style="--d:.1s">
+        <div class="preview" id="preview">
+          <p class="pv-dear">Dear Zayan &amp; Mahira,</p>
+          <p class="pv-name empty" id="pvName">Your name</p>
+          <p class="pv-line" id="pvLine">has yet to say whether they’ll join us on the twelfth of September…</p>
+        </div>
+
+        <form id="rsvpForm" novalidate>
+          <div class="field" id="nameField">
+            <label class="label" for="fName">Your name</label>
+            <input type="text" id="fName" autocomplete="name" placeholder="e.g. Margaret Hale">
+            <p class="err-msg">Please tell us your name</p>
+          </div>
+
+          <div class="field">
+            <span class="label">Will you be joining us?</span>
+            <div class="choice">
+              <input type="radio" name="att" id="attY" value="yes" checked>
+              <label for="attY"><span class="dia"></span>Joyfully accepts</label>
+              <input type="radio" name="att" id="attN" value="no">
+              <label for="attN"><span class="dia"></span>Regretfully declines</label>
+            </div>
+          </div>
+
+          <div class="field if-att">
+            <span class="label">Seats in your party</span>
+            <div class="stepper">
+              <button type="button" id="gMinus" aria-label="Fewer seats"><svg class="ic"><use href="#i-minus"/></svg></button>
+              <span class="gnum" id="gNum">1</span>
+              <button type="button" id="gPlus" aria-label="More seats"><svg class="ic"><use href="#i-plus"/></svg></button>
+              <span class="stepper-hint">including yourself</span>
+            </div>
+          </div>
+
+          <div class="field">
+            <label class="label" for="fSong">A song that will get you dancing</label>
+            <input type="text" id="fSong" placeholder="One we can’t not play…">
+          </div>
+
+          <div class="field">
+            <label class="label" for="fNotes">Anything we should know — dietary or otherwise</label>
+            <textarea id="fNotes" rows="2" placeholder="Allergies, plus-ones, kind words…"></textarea>
+          </div>
+
+          <div class="center"><button type="submit" class="btn">Seal my reply</button></div>
+        </form>
+
+        <div class="confirm" id="confirm">
+          <span class="wax small"><span class="mono">Z·M</span></span>
+          <p class="script c-script">with thanks</p>
+          <p class="c-name" id="cName"></p>
+          <p class="c-body" id="cBody"></p>
+          <button type="button" class="linkish" id="editReply">change your reply</button>
+        </div>
+
+        <p class="saved-note label" id="savedNote" hidden>A reply from a previous visit is remembered below — feel free to update it.</p>
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer class="dark foot">
+  <div class="wrap center">
+    <span class="wax small"><span class="mono">Z·M</span></span>
+    <p class="f-names">Zayan &amp; Mahira</p>
+    <span class="label">The Royal Garden · Uttara · Twelve September · Two Thousand Twenty-Six</span>
+    <p class="f-hash">#ZayanWedsMahira</p>
+    <p class="f-note">Crafted by <a class="f-link" href="https://www.instagram.com/spondora_invites/" target="_blank" rel="noopener">Spondora Invites</a></p>
+    <div class="social-links">
+      <a href="https://www.instagram.com/spondora_invites/" target="_blank" rel="noopener" aria-label="Spondora Invites on Instagram" title="Instagram">
+        <svg viewBox="0 0 24 24" aria-hidden="true"><g fill="none" stroke="currentColor" stroke-width="1.5"><rect x="3.5" y="3.5" width="17" height="17" rx="4.5"/><circle cx="12" cy="12" r="3.8"/></g><circle cx="16.9" cy="7.1" r="1.1" fill="currentColor"/></svg>
+      </a>
+      <a href="https://www.facebook.com/people/Spondora-Invites/61594435060189/" target="_blank" rel="noopener" aria-label="Spondora Invites on Facebook" title="Facebook">
+        <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M13.5 21v-6.9h2.5l.4-3h-2.9V9.2c0-.87.24-1.46 1.5-1.46h1.55V5.06c-.27-.04-1.2-.12-2.28-.12-2.26 0-3.8 1.38-3.8 3.9V11H8v3h2.47v7z" fill="currentColor"/></svg>
+      </a>
+    </div>
+  </div>
+</footer>
+
+<button id="musicBtn" aria-label="Toggle music" title="Pause the music box">
+  <svg class="ic"><use href="#i-note"/></svg>
+  <svg class="ic off"><use href="#i-note-off"/></svg>
+</button>
+
+<div id="toasts" aria-live="polite"></div>
+
+<script src="config.js"></script>
+<script src="script.js"></script>
+</body>
+</html>
