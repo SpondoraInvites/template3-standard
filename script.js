@@ -109,74 +109,39 @@ function frame(){
 if(!RM)requestAnimationFrame(frame);
 
 /* =========================================================
-   3. Generative music box — Web Audio, composed live
+   3. Background music — looping nasheed (audio file)
    ========================================================= */
-let engine=null,musicOn=false;
 const musicBtn=$('#musicBtn');
-function impulse(actx,sec,decay){
-  const rate=actx.sampleRate,len=Math.floor(rate*sec),buf=actx.createBuffer(2,len,rate);
-  for(let c=0;c<2;c++){const d=buf.getChannelData(c);
-    for(let i=0;i<len;i++)d[i]=(Math.random()*2-1)*Math.pow(1-i/len,decay);}
-  return buf;
+const MUSIC={src:(CFG.music&&CFG.music.src)||'assets/music/nafsiji.mp3',
+             volume:(CFG.music&&typeof CFG.music.volume==='number')?CFG.music.volume:.6};
+let audio=null,musicOn=false;
+function ensureAudio(){
+  if(audio)return audio;
+  audio=new Audio(MUSIC.src);
+  audio.loop=true;audio.preload='auto';audio.volume=0;
+  return audio;
 }
-function note(actx,dest,midi,when,vel,pan){
-  const f=440*Math.pow(2,(midi-69)/12);
-  const g=actx.createGain();
-  g.gain.setValueAtTime(0,when);
-  g.gain.linearRampToValueAtTime(vel,when+.007);
-  g.gain.exponentialRampToValueAtTime(.0003,when+2);
-  const o=actx.createOscillator();o.type='sine';o.frequency.value=f;o.detune.value=Math.random()*5-2.5;
-  const o2=actx.createOscillator();o2.type='sine';o2.frequency.value=f*3.47; // music-box partial
-  const g2=actx.createGain();g2.gain.value=.04;
-  let out=g;
-  if(actx.createStereoPanner){const p=actx.createStereoPanner();p.pan.value=(pan||0)*.6;g.connect(p);out=p;}
-  o.connect(g);o2.connect(g2);g2.connect(g);out.connect(dest);
-  o.start(when);o.stop(when+2.1);o2.start(when);o2.stop(when+2.1);
-}
-function buildEngine(){
-  const actx=new (window.AudioContext||window.webkitAudioContext)();
-  const master=actx.createGain();master.gain.value=.75;master.connect(actx.destination);
-  const conv=actx.createConvolver();conv.buffer=impulse(actx,2.6,2.8);
-  const wet=actx.createGain();wet.gain.value=.34;conv.connect(wet);wet.connect(master);
-  const dry=actx.createGain();dry.gain.value=.9;dry.connect(master);dry.connect(conv);
-  // D – Bm – G – A, gentle 3/4 arpeggios, 8 bars looping
-  const BARS=[
-    {r:62,p:[0,7,12,16,19,16]},{r:59,p:[0,7,12,15,19,15]},
-    {r:55,p:[0,7,12,16,19,16]},{r:57,p:[0,7,12,16,19,16]},
-    {r:62,p:[0,7,12,16,19,24]},{r:59,p:[12,19,24,19,15,12]},
-    {r:55,p:[12,16,19,16,12,7]}, {r:57,p:[0,4,7,12,16,19]}
-  ];
-  const seq=[];
-  BARS.forEach(b=>b.p.forEach((o,i)=>{
-    const notes=[b.r+o]; if(i===0)notes.push(b.r-12); // soft bass on the downbeat
-    seq.push({notes,v:i===0?.16:(i===2?.115:.105)});
-  }));
-  const EIGHTH=60/64/2, state={nextT:actx.currentTime+.2,idx:0};
-  setInterval(()=>{
-    if(actx.state!=='running')return;
-    while(state.nextT<actx.currentTime+1.2){
-      const ev=seq[state.idx];
-      ev.notes.forEach((n,k)=>note(actx,dry,n,state.nextT,(k>0?.7:1)*ev.v,(state.idx%12)/12-.5));
-      if(Math.random()<.055) // occasional high sparkle
-        note(actx,dry,ev.notes[0]+(Math.random()<.5?24:28),state.nextT+EIGHTH*.5,.05,Math.random()-.5);
-      state.nextT+=EIGHTH; state.idx=(state.idx+1)%seq.length;
-    }
-  },280);
-  return {actx,state};
+function fadeTo(target,done){
+  if(!audio)return;
+  const from=audio.volume,t0=performance.now(),dur=650;
+  (function step(now){
+    const k=Math.min(1,(now-t0)/dur);
+    audio.volume=Math.max(0,Math.min(1,from+(target-from)*k));
+    if(k<1)requestAnimationFrame(step);
+    else if(done)done();
+  })(t0);
 }
 function setMusic(on){
   musicOn=on;musicBtn.classList.toggle('on',on);
-  musicBtn.title=on?'Pause the music box':'Play the music box';
-  if(!engine)return;
+  musicBtn.title=on?'Pause the music':'Play the music';
+  if(!audio)return;
   if(on){
-    if(engine.state.nextT<engine.actx.currentTime+.1)engine.state.nextT=engine.actx.currentTime+.1;
-    engine.actx.resume();
-  }else engine.actx.suspend();
+    const p=audio.play();
+    if(p&&p.catch)p.catch(()=>{});
+    fadeTo(MUSIC.volume);
+  }else fadeTo(0,()=>audio.pause());
 }
-musicBtn.addEventListener('click',()=>{
-  if(!engine){engine=buildEngine();}
-  setMusic(!musicOn);
-});
+musicBtn.addEventListener('click',()=>{ensureAudio();setMusic(!musicOn);});
 
 /* =========================================================
    4. Envelope opening sequence
@@ -192,7 +157,7 @@ function finishOpen(){
 }
 sealBtn.addEventListener('click',()=>{
   if(opened)return;opened=true;
-  if(!engine)engine=buildEngine();
+  ensureAudio();
   setMusic(true); // the click doubles as the audio unlock
   const r=sealBtn.getBoundingClientRect();
   burst(r.left+r.width/2,r.top+r.height/2);

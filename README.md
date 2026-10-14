@@ -7,9 +7,9 @@ accents and ink serif typography, with a ceremonial **sealed-envelope
 opening**: guests tap the wax seal, the flap lifts, the card rises out
 and a burst of petals reveals the invitation. The botanical branch art
 is **drawn generatively in JavaScript**, petals fall on a canvas that
-follows the cursor like wind, and the background music box is
-**generated live with Web Audio** — no image or audio assets beyond the
-favicon and the social-share cover.
+follows the cursor like wind, and a looping background nasheed
+("NAFSIJI", `assets/music/nafsiji.mp3`) plays behind a floating note
+button.
 
 ## Features
 
@@ -35,8 +35,8 @@ favicon and the social-share cover.
   seats stepper, song request and notes field, sealed with an animated
   wax stamp; a returning guest's reply is remembered and can be
   updated
-- **Generative music box** — algorithmic arpeggios (Web Audio, no
-  audio file), toggled from the floating note button
+- **Background music** — a looping nasheed ("NAFSIJI",
+  `assets/music/nafsiji.mp3`), toggled from the floating note button
 - Toast notifications, `prefers-reduced-motion` honoured throughout,
   mobile-first with a full desktop layout
 
@@ -47,7 +47,8 @@ favicon and the social-share cover.
 | `index.html` | Page structure and display copy.                  |
 | `styles.css` | All styling; design tokens in `:root` at the top. |
 | `config.js`  | Values the script needs: wedding date, calendar, RSVP. |
-| `script.js`  | Petals, botanicals, music box, envelope intro, reveals, countdown, RSVP. |
+| `script.js`  | Petals, botanicals, background music, envelope intro, reveals, countdown, RSVP. |
+| `assets/music/nafsiji.mp3` | Background nasheed — swap for the client's song. |
 | `assets/favicon.svg` | Browser-tab favicon (terracotta Z·M monogram). |
 | `assets/og-cover.png` | 1200×750 social share preview (WhatsApp/Facebook). |
 | `tests/`     | Guard tests (`node --test tests/`).               |
@@ -77,6 +78,9 @@ Everything the **script** needs is in **`config.js`**:
   filename. Commas are escaped automatically.
 - `rsvp.storageKey` / `rsvp.maxParty` — the localStorage key and the
   seats stepper cap (the preview wording covers parties up to six).
+- `music.src` — the looping background nasheed
+  (`assets/music/nafsiji.mp3`); `music.volume` sets its level (0–1).
+  Replace the file with the client's song when known.
 
 Design tokens (paper, ink, terracotta, fonts) are CSS variables in the
 `:root` block at the top of `styles.css`; recolour the whole page by
