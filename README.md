@@ -31,6 +31,10 @@ button.
   arrives), ceremony and reception blurbs, the full day schedule, a
   locally generated **Add-to-Calendar (.ics)** file and a Google Maps
   directions link
+- **Share** — a "Share this invitation" menu (copy link, WhatsApp,
+  Messenger, Telegram, email) in *The Day* section plus a floating
+  share button that slides in above the music button once the hero
+  scrolls out of view; copying falls back gracefully on plain http
 - **RSVP** — live script preview of the reply, attendance choice,
   seats stepper, song request and notes field, sealed with an animated
   wax stamp; a returning guest's reply is remembered and can be

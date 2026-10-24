@@ -307,4 +307,81 @@ try{
   }
 }catch(_){}
 updatePreview();
+
+/* =========================================================
+   10. Share — copy link + WhatsApp / Messenger / Telegram /
+       email. Any [data-share-button] paired (via
+       aria-controls) with a [data-share-menu] opens the same
+       channel options; the "day" section uses one inline, and
+       a floating one sticks above the music button once the
+       hero scrolls out of view. No backend: channels compose
+       prefilled links; copying falls back for plain http.
+   ========================================================= */
+const shareText=()=>{
+  const d=new Date(CFG.weddingDateTime);
+  const when=d&&Number.isFinite(d.getTime())
+    ?d.toLocaleDateString('en-US',{weekday:'long',year:'numeric',month:'long',day:'numeric'}) :'';
+  return `${CFG.calendar.title}${when?' — '+when:''}`;
+};
+const enc=s=>encodeURIComponent(s);
+async function copyLink(){
+  const url=location.href;
+  try{
+    await navigator.clipboard.writeText(url);
+  }catch(_){
+    /* Clipboard API needs a secure context — fall back for plain http */
+    const ta=document.createElement('textarea');
+    ta.value=url;ta.style.position='fixed';ta.style.opacity='0';
+    document.body.appendChild(ta);ta.select();
+    try{document.execCommand('copy');}catch(__){}
+    ta.remove();
+  }
+  toast('Invitation link copied');
+}
+const shareActions={
+  copy:copyLink,
+  whatsapp:()=>window.open(`https://wa.me/?text=${enc(`${shareText()}\n${location.href}`)}`,'_blank','noopener'),
+  /* shortcut: deep link only opens the Messenger app (mobile); the desktop
+     web dialog needs a registered Facebook app ID */
+  messenger:()=>window.open(`fb-messenger://share/?link=${enc(location.href)}`,'_blank','noopener'),
+  telegram:()=>window.open(`https://t.me/share/url?url=${enc(location.href)}&text=${enc(shareText())}`,'_blank','noopener'),
+  email:()=>{location.href=`mailto:?subject=${enc(shareText())}&body=${enc(`${shareText()}\n${location.href}`)}`;},
+};
+const sharePairs=[];
+for(const button of $$('[data-share-button]')){
+  const menu=document.getElementById(button.getAttribute('aria-controls')||'');
+  if(!menu)continue;
+  menu.hidden=false; // JS is healthy — the .open class takes over from [hidden]
+  const setOpen=open=>{
+    menu.classList.toggle('open',open);
+    button.setAttribute('aria-expanded',String(open));
+  };
+  button.addEventListener('click',()=>setOpen(!menu.classList.contains('open')));
+  document.addEventListener('click',e=>{
+    if(menu.classList.contains('open')&&!menu.contains(e.target)&&e.target.closest('[data-share-button]')!==button)setOpen(false);
+  });
+  for(const[key,fn]of Object.entries(shareActions)){
+    const b=menu.querySelector(`[data-share="${key}"]`);
+    if(!b)continue;
+    b.addEventListener('click',()=>{fn();if(key!=='copy')setOpen(false);});
+  }
+  sharePairs.push({button,setOpen});
+}
+document.addEventListener('keydown',e=>{
+  if(e.key!=='Escape')return;
+  for(const{button,setOpen}of sharePairs){
+    if(button.getAttribute('aria-expanded')==='true'){setOpen(false);button.focus();}
+  }
+});
+/* floating share — slides in above the music button once the hero
+   has scrolled out of view */
+const heroEl=$('.hero'),floatShare=$('#floatShare');
+if(heroEl&&floatShare){
+  const updateFloat=()=>{
+    floatShare.classList.toggle('show',heroEl.getBoundingClientRect().bottom<innerHeight*.4);
+  };
+  updateFloat();
+  addEventListener('scroll',updateFloat,{passive:true});
+  addEventListener('resize',updateFloat,{passive:true});
+}
 })();

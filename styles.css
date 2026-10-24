@@ -258,6 +258,25 @@ body.revealed #musicBtn{opacity:1;pointer-events:auto}
 .toast.hide{opacity:0;transform:translateY(8px)}
 section{scroll-margin-top:4.5rem}
 
+/* ============ Share ============ */
+/* The "Share" button opens a pill menu overlaying the page (copy link,
+   WhatsApp, Messenger, Telegram, email) — same behaviour as the premium
+   template, restyled for paper & terracotta. */
+.share{position:relative;display:flex;justify-content:center}
+.share-menu{position:absolute;top:calc(100% + .65rem);left:50%;z-index:75;display:flex;flex-wrap:wrap;justify-content:center;gap:.5rem;padding:.7rem;width:max-content;max-width:min(92vw,420px);background:var(--paper-2);border:1px solid var(--hair);box-shadow:0 14px 34px rgba(38,34,26,.18);opacity:0;visibility:hidden;transform:translateX(-50%) translateY(-8px);transition:opacity .28s ease,transform .28s ease,visibility 0s linear .28s}
+.share-menu.open{opacity:1;visibility:visible;transform:translateX(-50%) translateY(0);transition:opacity .28s ease,transform .28s ease}
+.share-menu button{display:inline-flex;align-items:center;font-family:var(--sans);font-size:.62rem;letter-spacing:.2em;text-transform:uppercase;color:var(--ink);background:transparent;border:1px solid var(--hair);padding:.7em 1.15em;cursor:pointer;transition:background .3s,color .3s,border-color .3s}
+.share-menu button:hover,.share-menu button:focus-visible{background:var(--ink);color:var(--paper);border-color:var(--ink)}
+
+/* Floating share — sticks above the music button once the hero is out of view */
+.float-share{position:fixed;right:1.15rem;bottom:calc(1.15rem + 46px + .7rem);z-index:70;display:flex;flex-direction:column;align-items:flex-end;gap:.6rem;opacity:0;visibility:hidden;transform:translateX(18px);pointer-events:none;transition:opacity .35s ease,transform .35s ease,visibility 0s linear .35s}
+.float-share.show{opacity:1;visibility:visible;transform:none;pointer-events:auto;transition:opacity .35s ease,transform .35s ease}
+.float-share-button{width:46px;height:46px;border-radius:50%;border:1px solid var(--hair);background:rgba(251,248,241,.92);backdrop-filter:blur(6px);color:var(--ink);cursor:pointer;display:grid;place-items:center;box-shadow:0 8px 22px rgba(0,0,0,.15);transition:transform .3s,color .3s,border-color .3s}
+.float-share-button:hover,.float-share-button:focus-visible{color:var(--terra);border-color:var(--terra);transform:translateY(-2px)}
+.float-share-button .ic{width:19px;height:19px}
+.share-menu--float{position:absolute;top:auto;bottom:calc(100% + .65rem);left:auto;right:0;transform:translateX(0) translateY(8px);flex-direction:column;align-items:flex-end;flex-wrap:nowrap}
+.share-menu--float.open{transform:translateX(0) translateY(0)}
+
 @media (prefers-reduced-motion:reduce){
   *,*::before,*::after{animation-duration:.01ms!important;transition-duration:.01ms!important;scroll-behavior:auto!important}
 }
