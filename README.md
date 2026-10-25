@@ -82,6 +82,8 @@ Everything the **script** needs is in **`config.js`**:
   filename. Commas are escaped automatically.
 - `rsvp.storageKey` / `rsvp.maxParty` — the localStorage key and the
   seats stepper cap (the preview wording covers parties up to six).
+- `rsvp.whatsapp` — the couple's international WhatsApp number, digits
+  only (no `+`). Replace the sample number before publishing.
 - `music.src` — the looping background nasheed
   (`assets/music/nafsiji.mp3`); `music.volume` sets its level (0–1).
   Replace the file with the client's song when known.
@@ -92,11 +94,14 @@ changing `--paper`, `--ink` and `--terra`.
 
 ### RSVP delivery
 
-Replies are remembered **in the guest's own browser** only — the couple
-is not notified. If delivery is needed, extend the `submit` handler in
-`script.js` (search for `zm_rsvp_v1` → `rsvp.storageKey`) the way the
-Signature/Luxury templates do: open WhatsApp with the answers pre-typed
-and/or POST to a Formspree-style endpoint.
+Submitting a reply opens **WhatsApp with the answers prefilled** for
+`rsvp.whatsapp`, as in `template1-standard`. The message includes the
+guest's name, attendance, party size (when attending), and any song
+request or notes. **Guests must press Send in WhatsApp** to deliver it.
+
+Replies are also remembered **in the guest's own browser** so they can
+return and edit them. Set `rsvp.whatsapp` to `""` to disable WhatsApp and
+keep replies local only. No backend or automatic message sending is used.
 
 ## Running locally
 

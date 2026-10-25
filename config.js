@@ -46,11 +46,14 @@ const INVITE_CONFIG = {
   /* ---------- RSVP ----------
      Replies are remembered in the guest's own browser
      (localStorage) so a returning guest can update their reply.
-     They are NOT sent anywhere — see the README if you need
-     delivery to the couple (WhatsApp / Formspree).
+     whatsapp opens a prefilled reply to the couple's number;
+     guests must press Send in WhatsApp. Replace the sample number
+     with the client's international number (digits only, no +),
+     or set it to "" to keep replies local only.
      maxParty caps the seats stepper; the preview wording covers
      parties up to six.                                          */
   rsvp: {
+    whatsapp: "8801712345678",
     storageKey: "zm_rsvp_v1",
     maxParty: 6,
   },

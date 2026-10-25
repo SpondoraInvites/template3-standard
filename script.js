@@ -247,7 +247,7 @@ function toast(msg){
 });
 
 /* =========================================================
-   9. RSVP — live script preview, stepper, seal & storage
+   9. RSVP — live script preview, stepper, WhatsApp & storage
    ========================================================= */
 const form=$('#rsvpForm'),nameI=$('#fName'),nameField=$('#nameField'),
       attY=$('#attY'),attN=$('#attN'),gNum=$('#gNum'),
@@ -283,13 +283,25 @@ form.addEventListener('submit',e=>{
   const data={n,att:attY.checked?'yes':'no',g:parseInt(gNum.textContent),
     song:$('#fSong').value.trim(),notes:$('#fNotes').value.trim(),ts:Date.now()};
   try{localStorage.setItem(LS,JSON.stringify(data));}catch(_){}
+  const deliveryNote=CFG.rsvp.whatsapp
+    ?'We opened WhatsApp with your answers — just press send.'
+    :'Your reply is remembered in this browser only; it has not been sent to the couple.';
+  if(CFG.rsvp.whatsapp){
+    const lines=[`RSVP — ${CFG.calendar.title}`,`Name: ${data.n}`,
+      data.att==='yes'
+        ?`Attending: Joyfully, yes (${data.g} guest${data.g===1?'':'s'})`
+        :'Attending: Regretfully, no'];
+    if(data.song)lines.push(`Song: ${data.song}`);
+    if(data.notes)lines.push(`Message: ${data.notes}`);
+    window.open(`https://wa.me/${CFG.rsvp.whatsapp.replace(/[^\d]/g,'')}?text=${encodeURIComponent(lines.join('\n'))}`,'_blank','noopener');
+  }
   cName.textContent=n.split(' ')[0];
-  cBody.textContent=data.att==='yes'
-    ?'Your reply is sealed and on its way. We’ll save you a seat in the garden — and a slice of cake.'
-    :'You’ll be dearly missed — but thank you for telling us. We’ll raise a glass to you on the twelfth.';
+  cBody.textContent=deliveryNote+' '+(data.att==='yes'
+    ?'We’ll save you a seat in the garden — and a slice of cake.'
+    :'You’ll be dearly missed — but thank you for telling us. We’ll raise a glass to you on the twelfth.');
   form.style.display='none';
   confirmEl.classList.add('show');
-  toast(data.att==='yes'?'Your reply has been sealed — thank you':'Thank you for letting us know');
+  toast(deliveryNote);
 });
  $('#editReply').addEventListener('click',()=>{
   confirmEl.classList.remove('show');form.style.display='';
